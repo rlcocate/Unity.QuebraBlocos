@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BallScript : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class BallScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        GetComponent<Rigidbody2D>().velocity = Vector2.up * velocidade;
+		GetComponent<Rigidbody2D>().velocity = Vector2.down * velocidade;
     }
 
     void OnCollisionEnter2D(Collision2D c)
@@ -24,7 +25,19 @@ public class BallScript : MonoBehaviour
 
             // Redefine direção da bola.
             GetComponent<Rigidbody2D>().velocity = direcao * velocidade;
-        }
+		}
+
+		if (c.gameObject.tag == "targetblock") {
+			Destroy (c.gameObject);
+			TargetBlockScript.TargetBlocksTotal -= 1;
+			if (TargetBlockScript.TargetBlocksTotal == 0) {
+				SceneManager.LoadScene ("StartScene");	
+			}
+		}
+
+		if (c.gameObject.tag == "bdbottom") {
+			SceneManager.LoadScene ("StartScene");
+		}
     }
 
     float AcertouBase(Vector2 bolaPosicao, Vector2 basePosicao, float tamanhoBase)

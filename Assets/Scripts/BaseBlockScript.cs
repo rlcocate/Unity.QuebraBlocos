@@ -12,7 +12,6 @@ public class BaseBlockScript : MonoBehaviour {
 
     void Mover()
     {
-
         // Mover
         var move_x = Input.GetAxisRaw("Horizontal") * velocidade * Time.deltaTime;
         transform.Translate(move_x, 0.0f, 0.0f);
